@@ -8,7 +8,7 @@ use EdmondsCommerce\MultiplicationTables\Exceptions\MultiplicationYValueMustBePo
 use EdmondsCommerce\MultiplicationTables\Values\MultiplicationValue;
 use Magento\Framework\Stdlib\ArrayManager;
 
-class MultiplicationValueValidator
+class MultiplicationValueValidator implements MultiplicationValueValidatorInterface
 {
     public function __construct()
     {
