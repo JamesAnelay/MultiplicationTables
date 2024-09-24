@@ -18,12 +18,22 @@ class MultiplicationValueSetupServiceTest extends TestCase
         $this->assertTrue($multiplicationValueValidator->validate($multiplicationValue));
     }
 
-    public function test_0_x_value_will_throw_an_exception()
+    public function test_empty_values_are_allowed()
+    {
+        $multiplicationValueValidator = new MultiplicationValueValidator();
+        $multiplicationValue = new MultiplicationValue(null, null);
+        $this->assertTrue($multiplicationValueValidator->validate($multiplicationValue));
+    }
+
+    /**
+     * @dataProvider provideValuesLessThan1
+     */
+    public function test_0_x_value_of_0_or_less_will_throw_an_exception($value)
     {
         $multiplicationValueValidator = new MultiplicationValueValidator();
 
         try{
-            $multiplicationValue = new MultiplicationValue(0, 1);
+            $multiplicationValue = new MultiplicationValue($value, 1);
             $multiplicationValueValidator->validate($multiplicationValue);
         } catch (MultiplicationXValueMustBePositiveException $exception){
             $this->assertEquals("Invalid input x value must be positive", $exception->getMessage());
@@ -33,12 +43,15 @@ class MultiplicationValueSetupServiceTest extends TestCase
         $this->fail("Expected exception was not thrown");
     }
 
-    public function test_0_y_value_will_throw_an_exception()
+    /**
+     * @dataProvider provideValuesLessThan1
+     */
+    public function test_0_y_value_of_0_or_less_will_throw_an_exception($value)
     {
         $multiplicationValueValidator = new MultiplicationValueValidator();
 
         try{
-            $multiplicationValue = new MultiplicationValue(1, 0);
+            $multiplicationValue = new MultiplicationValue(1, $value);
             $multiplicationValueValidator->validate($multiplicationValue);
         } catch (MultiplicationYValueMustBePositiveException $exception){
             $this->assertEquals("Invalid input y value must be positive", $exception->getMessage());
@@ -46,5 +59,15 @@ class MultiplicationValueSetupServiceTest extends TestCase
         }
 
         $this->fail("Expected exception was not thrown");
+    }
+
+    public function provideValuesLessThan1()
+    {
+        return [
+            [0],
+            [-1],
+            [-10],
+            [-100]
+        ];
     }
 }

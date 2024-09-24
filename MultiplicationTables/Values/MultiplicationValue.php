@@ -5,7 +5,7 @@ namespace EdmondsCommerce\MultiplicationTables\Values;
 
 class MultiplicationValue
 {
-    public function __construct(private int $x, private int $y)
+    public function __construct(private ?int $x, private ?int $y)
     {
     }
 

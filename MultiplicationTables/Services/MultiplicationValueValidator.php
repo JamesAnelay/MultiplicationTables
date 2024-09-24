@@ -19,6 +19,10 @@ class MultiplicationValueValidator
         $x = (new ArrayManager())->get('x', $multiplicationValue->getValueAsArray());
         $y = (new ArrayManager())->get('y', $multiplicationValue->getValueAsArray());
 
+        if($x === null && $y === null){
+            return true;
+        }
+
         if($x < 1){
             throw new MultiplicationXValueMustBePositiveException("Invalid input x value must be positive");
         }
