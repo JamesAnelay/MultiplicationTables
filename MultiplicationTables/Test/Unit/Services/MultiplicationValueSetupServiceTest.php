@@ -18,6 +18,16 @@ class MultiplicationValueSetupServiceTest extends TestCase
         $this->assertTrue($multiplicationValueValidator->validate($multiplicationValue));
     }
 
+    /**
+     * @dataProvider provideValidExamples
+     */
+    public function test_a_range_of_positive_values($x, $y)
+    {
+        $multiplicationValueValidator = new MultiplicationValueValidator();
+        $multiplicationValue = new MultiplicationValue($x, $y);
+        $this->assertTrue($multiplicationValueValidator->validate($multiplicationValue));
+    }
+
     public function test_empty_values_are_allowed()
     {
         $multiplicationValueValidator = new MultiplicationValueValidator();
@@ -68,6 +78,18 @@ class MultiplicationValueSetupServiceTest extends TestCase
             [-1],
             [-10],
             [-100]
+        ];
+    }
+
+    public function provideValidExamples()
+    {
+        return [
+            [1,1],
+            [100,100],
+            [200,200],
+            [120,102],
+            [13,99],
+            [1,121313121213]
         ];
     }
 }

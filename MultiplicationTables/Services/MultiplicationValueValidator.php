@@ -19,7 +19,7 @@ class MultiplicationValueValidator
         $x = (new ArrayManager())->get('x', $multiplicationValue->getValueAsArray());
         $y = (new ArrayManager())->get('y', $multiplicationValue->getValueAsArray());
 
-        if($x === null && $y === null){
+        if($this->bothValuesAreNotSet($x, $y)){
             return true;
         }
 
@@ -32,5 +32,10 @@ class MultiplicationValueValidator
         }
 
         return true;
+    }
+
+    public function bothValuesAreNotSet(mixed $x, mixed $y): bool
+    {
+        return $x === null && $y === null;
     }
 }
