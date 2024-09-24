@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace EdmondsCommerce\MultiplicationTables\Model\Product\Attribute\Backend;
 
-class StubBackend
+class StubBackend extends StubBackendParent
 {
     private array $validatedObjects = [];
 

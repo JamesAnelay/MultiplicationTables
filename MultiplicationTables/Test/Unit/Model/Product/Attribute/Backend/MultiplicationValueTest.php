@@ -17,15 +17,16 @@ class MultiplicationValueTest extends TestCase
     {
         $exampleObjectToValidate = new StubProduct(
             [
-                'x_axis' => 10,
-                'y_axis' => 20
+                'x_axis' => '10',
+                'y_axis' => '20'
             ]
         );
-        $exampleObject = new StubValidator();
+        $stubCustomValidator = new StubValidator();
         $backend = new MultiplicationValue();
-        $backend->setValidator($exampleObject);
+        $backend->setSkipParentValidation(); //Probably a better way
+        $backend->setValidator($stubCustomValidator);
         $backend->validate($exampleObjectToValidate);
-        $this->assertEquals(new \EdmondsCommerce\MultiplicationTables\Values\MultiplicationValue(10,20), $exampleObject->getValidatedParams()[0]);
+        $this->assertEquals(new \EdmondsCommerce\MultiplicationTables\Values\MultiplicationValue(10,20), $stubCustomValidator->getValidatedParams()[0]);
     }
 
     public function test_that_exceptions_are_caught_and_mapped_to_localized_exceptions()
@@ -33,19 +34,21 @@ class MultiplicationValueTest extends TestCase
         try{
             $exampleObjectToValidate = new StubProduct(
                 [
-                    'x_axis' => 0,
-                    'y_axis' => 20
+                    'x_axis' => '0',
+                    'y_axis' => '20'
                 ]
             );
-            $exampleObject = new StubValidator();
-            $exampleObject->setExceptionToThrow(new MultiplicationXValueMustBePositiveException("Whoops an error"));
+            $stubCustomValidator = new StubValidator();
+            $stubCustomValidator->setExceptionToThrow(new MultiplicationXValueMustBePositiveException("Whoops an error"));
             $backend = new MultiplicationValue();
-            $backend->setValidator($exampleObject);
+            $backend->setSkipParentValidation(); //Probably a better way
+            $backend->setValidator($stubCustomValidator);
             $backend->validate($exampleObjectToValidate);
         }catch (LocalizedException $exception){
             $this->assertEquals("Whoops an error",$exception->getMessage());
             return;
         }
+
         $this->fail("Expection exception was not thrown");
     }
 }

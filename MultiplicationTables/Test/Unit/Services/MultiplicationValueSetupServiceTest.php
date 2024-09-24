@@ -46,7 +46,7 @@ class MultiplicationValueSetupServiceTest extends TestCase
             $multiplicationValue = new MultiplicationValue($value, 1);
             $multiplicationValueValidator->validate($multiplicationValue);
         } catch (MultiplicationXValueMustBePositiveException $exception){
-            $this->assertEquals("Invalid input x value must be positive", $exception->getMessage());
+            $this->assertEquals("Invalid input x value must be one or greater", $exception->getMessage());
             return;
         }
 
@@ -64,7 +64,7 @@ class MultiplicationValueSetupServiceTest extends TestCase
             $multiplicationValue = new MultiplicationValue(1, $value);
             $multiplicationValueValidator->validate($multiplicationValue);
         } catch (MultiplicationYValueMustBePositiveException $exception){
-            $this->assertEquals("Invalid input y value must be positive", $exception->getMessage());
+            $this->assertEquals("Invalid input y value must be one or greater", $exception->getMessage());
             return;
         }
 

@@ -13,6 +13,7 @@ use Magento\Framework\Exception\LocalizedException;
 class MultiplicationValue extends AbstractBackend
 {
     private MultiplicationValueValidatorInterface $customValidator;
+    private bool $skipParentValidation = false;
 
     public function __construct()
     {
@@ -26,13 +27,31 @@ class MultiplicationValue extends AbstractBackend
         $this->customValidator = $validator;
     }
 
+    public function setSkipParentValidation()
+    {
+        $this->skipParentValidation = true;
+    }
+
     public function validate($object)
     {
+        if(!$this->skipParentValidation) {
+            parent::validate($object);
+        }
+
+        if($this->isNullOrEmptyString($object->getData('x_axis')) && $this->isNullOrEmptyString($object->getData('y_axis'))){
+            return;
+        }
+
         try {
-            $value = new \EdmondsCommerce\MultiplicationTables\Values\MultiplicationValue($object->getData('x_axis'), $object->getData('y_axis'));
+            $value = new \EdmondsCommerce\MultiplicationTables\Values\MultiplicationValue((int)$object->getData('x_axis'), (int)$object->getData('y_axis'));
             $this->customValidator->validate($value);
         }catch (MultiplicationXValueMustBePositiveException|MultiplicationYValueMustBePositiveException $exception){
             throw new LocalizedException(__($exception->getMessage()));
         }
+    }
+
+    private function isNullOrEmptyString($value)
+    {
+        return $value === null || $value === '';
     }
 }

@@ -24,11 +24,11 @@ class MultiplicationValueValidator implements MultiplicationValueValidatorInterf
         }
 
         if($x < 1){
-            throw new MultiplicationXValueMustBePositiveException("Invalid input x value must be positive");
+            throw new MultiplicationXValueMustBePositiveException("Invalid input x value must be one or greater");
         }
 
         if($y < 1){
-            throw new MultiplicationYValueMustBePositiveException("Invalid input y value must be positive");
+            throw new MultiplicationYValueMustBePositiveException("Invalid input y value must be one or greater");
         }
 
         return true;
