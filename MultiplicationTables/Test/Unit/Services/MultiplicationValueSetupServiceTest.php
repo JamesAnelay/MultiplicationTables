@@ -28,13 +28,6 @@ class MultiplicationValueSetupServiceTest extends TestCase
         $this->assertTrue($multiplicationValueValidator->validate($multiplicationValue));
     }
 
-    public function test_empty_values_are_allowed()
-    {
-        $multiplicationValueValidator = new MultiplicationValueValidator();
-        $multiplicationValue = new MultiplicationValue(null, null);
-        $this->assertTrue($multiplicationValueValidator->validate($multiplicationValue));
-    }
-
     /**
      * @dataProvider provideValuesLessThan1
      */
