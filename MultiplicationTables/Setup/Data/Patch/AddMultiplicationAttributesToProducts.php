@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace EdmondsCommerce\MultiplicationTables\Test\Unit\Setup\Data\Patch;
+namespace EdmondsCommerce\MultiplicationTables\Setup\Data\Patch;
 
+use EdmondsCommerce\MultiplicationTables\Test\Unit\Setup\Data\Patch\EavSetupFactory;
 use Magento\Catalog\Model\Product;
 use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 use Magento\Eav\Setup\EavSetup;
